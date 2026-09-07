@@ -12,10 +12,10 @@ def generate(query: str, context_chunks: list[dict]) -> str:
     )
 
     system_prompt = (
-        "You are a helpful assistant that answers questions based on the provided document context. "
-        "Use ONLY the information in the context below to answer. "
-        "If the context does not contain enough information to answer, say so clearly. "
-        "Cite which source file(s) your answer draws from."
+        "You are a helpful assistant that answers questions about Joseph Haberberger's professional experience. "
+        "Use ONLY the information in the provided resume context to answer. "
+        "Be concise and professional. "
+        "If the context does not contain enough information to answer, say so clearly."
     )
 
     user_message = f"## Retrieved Context\n\n{context_block}\n\n## Question\n\n{query}"

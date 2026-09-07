@@ -4,6 +4,7 @@ from pathlib import Path
 
 import chromadb
 import ollama
+import pdfplumber
 
 DOCS_DIR = Path(__file__).resolve().parent.parent / "docs"
 CHROMA_DIR = Path(__file__).resolve().parent.parent / "chroma_db"
@@ -19,8 +20,15 @@ def embed_texts(texts: list[str]) -> list[list[float]]:
     return response.embeddings
 
 
+def read_pdf(file_path: Path) -> str:
+    """Extract text from a PDF file."""
+    with pdfplumber.open(file_path) as pdf:
+        pages = [page.extract_text() or "" for page in pdf.pages]
+    return "\n\n".join(pages).strip()
+
+
 def read_documents() -> list[dict]:
-    """Read all .txt and .md files from the docs directory."""
+    """Read .txt and .md files from the docs directory. PDFs are served for display only."""
     docs = []
     for file_path in sorted(DOCS_DIR.iterdir()):
         if file_path.suffix in (".txt", ".md"):
@@ -30,8 +38,34 @@ def read_documents() -> list[dict]:
     return docs
 
 
+import re
+
+
 def chunk_text(text: str, filename: str) -> list[dict]:
-    """Split text into overlapping chunks."""
+    """Split text by markdown sections. Falls back to character-based chunking for non-markdown."""
+    if filename.endswith(".md"):
+        return chunk_by_sections(text, filename)
+    return chunk_by_size(text, filename)
+
+
+def chunk_by_sections(text: str, filename: str) -> list[dict]:
+    """Split markdown into chunks by ## or ### headings."""
+    sections = re.split(r'(?=^##\s)', text, flags=re.MULTILINE)
+    chunks = []
+    for section in sections:
+        section = section.strip()
+        if not section:
+            continue
+        chunks.append({
+            "text": section,
+            "filename": filename,
+            "start": text.index(section),
+        })
+    return chunks
+
+
+def chunk_by_size(text: str, filename: str) -> list[dict]:
+    """Fall back to character-based overlapping chunks."""
     chunks = []
     start = 0
     while start < len(text):
