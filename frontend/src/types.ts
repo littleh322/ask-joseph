@@ -12,8 +12,14 @@ export interface AskResponse {
   sources: Source[];
 }
 
-export interface Document {
-  filename: string;
-  type: 'text' | 'pdf';
-  content: string | null;
+export interface ResumeData {
+  name: string;
+  title: string;
+  contact: string[];
+  sections: ResumeSection[];
+}
+
+export interface ResumeSection {
+  heading: string;
+  content: string;
 }

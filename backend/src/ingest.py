@@ -4,7 +4,6 @@ from pathlib import Path
 
 import chromadb
 import ollama
-import pdfplumber
 
 DOCS_DIR = Path(__file__).resolve().parent.parent / "docs"
 CHROMA_DIR = Path(__file__).resolve().parent.parent / "chroma_db"
@@ -18,13 +17,6 @@ def embed_texts(texts: list[str]) -> list[list[float]]:
     """Generate embeddings using Ollama."""
     response = ollama.embed(model=EMBEDDING_MODEL, input=texts)
     return response.embeddings
-
-
-def read_pdf(file_path: Path) -> str:
-    """Extract text from a PDF file."""
-    with pdfplumber.open(file_path) as pdf:
-        pages = [page.extract_text() or "" for page in pdf.pages]
-    return "\n\n".join(pages).strip()
 
 
 def read_documents() -> list[dict]:
