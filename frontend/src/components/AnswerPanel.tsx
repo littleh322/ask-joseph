@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Box, Text, Spinner, IconButton, Flex } from '@chakra-ui/react';
 import { LuX } from 'react-icons/lu';
 import type { Source } from '../types';
+import { colors } from '../theme/colors';
 
 interface AnswerPanelProps {
   answer: string | null;
@@ -46,11 +47,11 @@ export const AnswerPanel = ({ answer, sources, isLoading, onClose }: AnswerPanel
 
   return (
     <Box maxW="720px" mx="auto" w="100%" px={{ base: 4, md: 8 }} pb={2}>
-      <Box bg="#1B3640" borderRadius="lg" p={4} border="1px solid" borderColor="#874F41">
+      <Box bg={colors.headerBg} borderRadius="lg" p={4} border="1px solid" borderColor={colors.border}>
         {isLoading ? (
           <Flex align="center" justify="center" gap={2} py={2}>
-            <Spinner size="md" color="#E64833" />
-            <Text fontSize="sm" color="#90AEAD">
+            <Spinner size="md" color={colors.accent} />
+            <Text fontSize="sm" color={colors.textMuted}>
               Searching documents...
             </Text>
           </Flex>
@@ -61,23 +62,23 @@ export const AnswerPanel = ({ answer, sources, isLoading, onClose }: AnswerPanel
                 aria-label="Close"
                 size="xs"
                 variant="ghost"
-                color="#90AEAD"
-                _hover={{ bg: '#244855' }}
+                color={colors.textMuted}
+                _hover={{ bg: colors.pageBg }}
                 onClick={onClose}
               >
                 <LuX />
               </IconButton>
             </Flex>
-            <Text fontSize="md" whiteSpace="pre-wrap" color="#FBE9D0">
+            <Text fontSize="md" whiteSpace="pre-wrap" color={colors.textLight}>
               {displayed}
               {isTyping && (
-                <Box as="span" color="#E64833">
+                <Box as="span" color={colors.accent}>
                   ▌
                 </Box>
               )}
             </Text>
             {!isTyping && sources.length > 0 && (
-              <Text mt={3} fontSize="xs" color="#90AEAD">
+              <Text mt={3} fontSize="xs" color={colors.textMuted}>
                 Sources: {sources.map((s) => s.filename).join(', ')}
               </Text>
             )}

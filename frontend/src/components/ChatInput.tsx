@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Box, Input, IconButton, Flex } from '@chakra-ui/react';
 import { LuSend } from 'react-icons/lu';
+import { colors } from '../theme/colors';
 
 interface ChatInputProps {
   onSend: (question: string) => void;
@@ -27,20 +28,20 @@ export const ChatInput = ({ onSend, isLoading }: ChatInputProps) => {
           onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
           disabled={isLoading}
           size="lg"
-          bg="#1B3640"
-          borderColor="#874F41"
-          color="#FBE9D0"
-          _placeholder={{ color: '#90AEAD' }}
-          _focus={{ borderColor: '#E64833', boxShadow: '0 0 0 1px #E64833' }}
+          bg={colors.headerBg}
+          borderColor={colors.border}
+          color={colors.textLight}
+          _placeholder={{ color: colors.textMuted }}
+          _focus={{ borderColor: colors.accent, boxShadow: `0 0 0 1px ${colors.accent}` }}
         />
         <IconButton
           aria-label="Send"
           onClick={handleSubmit}
           disabled={isLoading || !input.trim()}
           size="lg"
-          bg="#E64833"
-          color="#FBE9D0"
-          _hover={{ bg: '#D03D2A' }}
+          bg={colors.accent}
+          color={colors.textLight}
+          _hover={{ bg: colors.accentHover }}
         >
           <LuSend />
         </IconButton>

@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { LuArrowLeft, LuSave, LuUpload } from 'react-icons/lu';
+import { colors } from '../theme/colors';
 
 const API_URL = 'http://localhost:8000';
 
@@ -115,9 +116,9 @@ export const AdminPage = () => {
 
   if (!isAuthed) {
     return (
-      <Flex minH="100vh" bg="#244855" align="center" justify="center">
-        <Box bg="#1B3640" p={8} borderRadius="lg" border="1px solid" borderColor="#874F41" w="360px">
-          <Heading size="lg" color="#FBE9D0" mb={4}>
+      <Flex minH="100vh" bg={colors.pageBg} align="center" justify="center">
+        <Box bg={colors.headerBg} p={8} borderRadius="lg" border="1px solid" borderColor={colors.border} w="360px">
+          <Heading size="lg" color={colors.textLight} mb={4}>
             Admin Login
           </Heading>
           <VStack gap={3}>
@@ -127,17 +128,17 @@ export const AdminPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-              bg="#244855"
-              borderColor="#874F41"
-              color="#FBE9D0"
-              _placeholder={{ color: '#90AEAD' }}
+              bg={colors.pageBg}
+              borderColor={colors.border}
+              color={colors.textLight}
+              _placeholder={{ color: colors.textMuted }}
             />
             {loginError && (
-              <Text fontSize="sm" color="#E64833">
+              <Text fontSize="sm" color={colors.accent}>
                 {loginError}
               </Text>
             )}
-            <Button w="100%" bg="#E64833" color="#FBE9D0" _hover={{ bg: '#D03D2A' }} onClick={handleLogin}>
+            <Button w="100%" bg={colors.accent} color={colors.textLight} _hover={{ bg: colors.accentHover }} onClick={handleLogin}>
               Sign In
             </Button>
           </VStack>
@@ -147,50 +148,47 @@ export const AdminPage = () => {
   }
 
   return (
-    <Flex direction="column" minH="100vh" bg="#244855">
-      {/* Header */}
-      <Box bg="#1B3640" px={{ base: 4, md: 8 }} py={3} borderBottom="1px solid" borderColor="#874F41">
+    <Flex direction="column" minH="100vh" bg={colors.pageBg}>
+      <Box bg={colors.headerBg} px={{ base: 4, md: 8 }} py={3} borderBottom="1px solid" borderColor={colors.border}>
         <Flex maxW="960px" mx="auto" justify="space-between" align="center">
           <Flex align="center" gap={3}>
             <RouterLink to="/">
-              <Button size="sm" variant="ghost" color="#90AEAD" _hover={{ bg: '#244855' }}>
+              <Button size="sm" variant="ghost" color={colors.textMuted} _hover={{ bg: colors.pageBg }}>
                 <LuArrowLeft />
                 Resume
               </Button>
             </RouterLink>
-            <Heading size="md" color="#FBE9D0">
+            <Heading size="md" color={colors.textLight}>
               Admin
             </Heading>
           </Flex>
-          <Text fontSize="xs" color="#90AEAD">
+          <Text fontSize="xs" color={colors.textMuted}>
             {filename}
           </Text>
         </Flex>
       </Box>
 
-      {/* Editor */}
       <Box flex="1" px={{ base: 4, md: 8 }} py={6}>
         <Box maxW="960px" mx="auto">
-          {/* Avatar upload */}
           <Flex
             align="center"
             gap={3}
             mb={5}
             p={4}
-            bg="#1B3640"
+            bg={colors.headerBg}
             borderRadius="lg"
             border="1px solid"
-            borderColor="#874F41"
+            borderColor={colors.border}
           >
-            <Text fontSize="sm" color="#FBE9D0" fontWeight="bold">
+            <Text fontSize="sm" color={colors.textLight} fontWeight="bold">
               Avatar
             </Text>
             <Box position="relative">
               <Button
                 as="label"
                 size="sm"
-                bg="#874F41"
-                color="#FBE9D0"
+                bg={colors.border}
+                color={colors.textLight}
                 _hover={{ bg: '#6B3F33' }}
                 cursor="pointer"
                 disabled={uploading}
@@ -206,35 +204,34 @@ export const AdminPage = () => {
               </Button>
             </Box>
             {uploadStatus && (
-              <Text fontSize="xs" color="#90AEAD">
+              <Text fontSize="xs" color={colors.textMuted}>
                 {uploadStatus}
               </Text>
             )}
           </Flex>
 
-          {/* Markdown editor */}
           <Box
-            bg="#1B3640"
+            bg={colors.headerBg}
             borderRadius="lg"
             border="1px solid"
-            borderColor="#874F41"
+            borderColor={colors.border}
             p={4}
           >
             <Flex justify="space-between" align="center" mb={3}>
-              <Text fontSize="sm" fontWeight="bold" color="#FBE9D0">
+              <Text fontSize="sm" fontWeight="bold" color={colors.textLight}>
                 Resume Markdown
               </Text>
               <Flex align="center" gap={2}>
                 {saveStatus && (
-                  <Text fontSize="xs" color="#90AEAD">
+                  <Text fontSize="xs" color={colors.textMuted}>
                     {saveStatus}
                   </Text>
                 )}
                 <Button
                   size="sm"
-                  bg="#E64833"
-                  color="#FBE9D0"
-                  _hover={{ bg: '#D03D2A' }}
+                  bg={colors.accent}
+                  color={colors.textLight}
+                  _hover={{ bg: colors.accentHover }}
                   onClick={handleSave}
                   disabled={saving}
                 >
@@ -249,10 +246,10 @@ export const AdminPage = () => {
               minH="70vh"
               fontFamily="mono"
               fontSize="sm"
-              bg="#244855"
-              borderColor="#874F41"
-              color="#FBE9D0"
-              _placeholder={{ color: '#90AEAD' }}
+              bg={colors.pageBg}
+              borderColor={colors.border}
+              color={colors.textLight}
+              _placeholder={{ color: colors.textMuted }}
               resize="vertical"
             />
           </Box>

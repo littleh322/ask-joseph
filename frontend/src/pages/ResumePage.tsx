@@ -6,6 +6,7 @@ import { ResumeView } from '../components/ResumeView';
 import { AnswerPanel } from '../components/AnswerPanel';
 import { ChatInput } from '../components/ChatInput';
 import { parseResume } from '../utils/parseResume';
+import { colors } from '../theme/colors';
 import type { AskResponse, ResumeData, Source } from '../types';
 
 const API_URL = 'http://localhost:8000';
@@ -56,40 +57,38 @@ export const ResumePage = () => {
   };
 
   return (
-    <Flex direction="column" minH="100vh" bg="#244855">
-      {/* Header */}
+    <Flex direction="column" minH="100vh" bg={colors.pageBg}>
       <Box
-        bg="#1B3640"
+        bg={colors.headerBg}
         px={{ base: 4, md: 8 }}
         py={4}
         borderBottom="1px solid"
-        borderColor="#874F41"
+        borderColor={colors.border}
       >
         <Flex maxW="960px" mx="auto" justify="space-between" align="center">
           <Box>
-            <Text color="#FBE9D0" fontSize="xl" fontWeight="bold">
+            <Text color={colors.textLight} fontSize="xl" fontWeight="bold">
               Joseph Haberberger
             </Text>
-            <Text color="#90AEAD" fontSize="sm">
+            <Text color={colors.textMuted} fontSize="sm">
               Ask me anything about my experience
             </Text>
           </Box>
           <RouterLink to="/admin">
-            <Box color="#90AEAD" _hover={{ color: '#FBE9D0' }} cursor="pointer" p={2}>
+            <Box color={colors.textMuted} _hover={{ color: colors.textLight }} cursor="pointer" p={2}>
               <LuSettings size={18} />
             </Box>
           </RouterLink>
         </Flex>
       </Box>
 
-      {/* Content */}
       <Box flex="1" overflowY="auto" pb="200px">
         {loading ? (
           <Flex justify="center" py={10}>
-            <Spinner size="lg" color="#E64833" />
+            <Spinner size="lg" color={colors.accent} />
           </Flex>
         ) : !resume ? (
-          <Text color="#90AEAD" textAlign="center" py={10}>
+          <Text color={colors.textMuted} textAlign="center" py={10}>
             No resume found. Upload one in the admin panel.
           </Text>
         ) : (
@@ -97,15 +96,14 @@ export const ResumePage = () => {
         )}
       </Box>
 
-      {/* Fixed bottom: answer + chat */}
       <Box
         position="fixed"
         bottom={0}
         left={0}
         right={0}
-        bg="#244855"
+        bg={colors.pageBg}
         borderTop="1px solid"
-        borderColor="#874F41"
+        borderColor={colors.border}
       >
         <AnswerPanel answer={answer} sources={sources} isLoading={isAsking} onClose={handleClose} />
         <ChatInput onSend={handleSend} isLoading={isAsking} />
