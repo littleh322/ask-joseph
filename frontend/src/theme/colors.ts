@@ -9,8 +9,8 @@ export const colors = {
   avatarFallback: '#D4D0C8',
 
   // Accent & borders
-  accent: '#E64833',
-  accentHover: '#D03D2A',
+  accent: '#EF6C5B',
+  accentHover: '#E55A48',
   border: '#874F41',
   borderLight: '#DDDDDD',
   borderSidebar: '#D4CFC7',

@@ -5,7 +5,8 @@ joseph.haberberger@gmail.com | +1 314-440-0496 | [LinkedIn](https://www.linkedin
 
 ## Professional Experience
 
-### Staff Software Engineer — Equip Health | 02/2025 - Present
+### Staff Software Engineer
+Equip Health | 02/2025 - Present
 
 - Architect and deliver end-to-end features across 10+ Java microservices (Micronaut, jOOQ, Flyway) supporting clinical data capture workflows in a healthcare SaaS platform
 - Drive real-time AI feature delivery using AWS AppSync and WebSockets, shipping an LLM-powered provider appointment summary tool from concept to production
@@ -17,7 +18,8 @@ joseph.haberberger@gmail.com | +1 314-440-0496 | [LinkedIn](https://www.linkedin
 - Negotiate scope with Product leadership to deliver clinical data initiatives (baseline surveys, overdue nudges, discharge plans, and PHQ-9) under tight timelines, supporting 90%+ survey completion OKRs
 - Mentor and onboard engineers across multiple teams into production-readiness, enforcing SOLID principles, transactional SQL, async threading, and testing patterns through daily cross-team code reviews
 
-### Senior Software Engineer — Equip Health | 09/2023 - 02/2025
+### Senior Software Engineer
+Equip Health | 09/2023 - 02/2025
 
 - Design and document a company-wide asynchronous messaging architecture (Kinesis data streams) adopted as the standard for event-driven workflows across all backend services
 - Lead critical Chat service stabilization and feature delivery (Emoji Reactions, channel management), reducing provider notification volume by 10% against company KPIs
@@ -52,8 +54,11 @@ joseph.haberberger@gmail.com | +1 314-440-0496 | [LinkedIn](https://www.linkedin
 
 ## Education
 
-- **BA in Computer Information Systems** — Missouri State University, 09/2011 - 06/2015
-- **BA in Information Technology Service Management** — Missouri State University, 09/2011 - 06/2015
+**BA in Computer Information Systems**
+
+**BA in Information Technology Service Management**
+
+Missouri State University | 09/2011 - 06/2015
 
 ## Interests
 

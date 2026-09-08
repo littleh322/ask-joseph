@@ -12,6 +12,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import { LuArrowLeft, LuSave, LuUpload } from 'react-icons/lu';
 import { colors } from '../theme/colors';
+import { fonts } from '../theme/fonts';
 
 const API_URL = 'http://localhost:8000';
 
@@ -244,7 +245,7 @@ export const AdminPage = () => {
               value={markdown}
               onChange={(e) => setMarkdown(e.target.value)}
               minH="70vh"
-              fontFamily="mono"
+              fontFamily={fonts.mono}
               fontSize="sm"
               bg={colors.pageBg}
               borderColor={colors.border}

@@ -10,17 +10,19 @@ interface ResumeViewProps {
   resume: ResumeData;
 }
 
+const SIDEBAR_ORDER = ['Soft Skills', 'Technical Skills', 'Certifications', 'Interests'];
+
 const mainMarkdownCss = {
   '& h3': {
-    fontSize: '0.95rem',
+    fontSize: '1rem',
     fontWeight: 'bold',
     color: colors.textDark,
-    marginBottom: '0.25rem',
-    marginTop: '0.75rem',
+    marginBottom: '0.15rem',
+    marginTop: '1rem',
   },
-  '& p': { marginBottom: '0.5rem', lineHeight: '1.6', fontSize: '0.875rem', color: colors.textBody },
-  '& ul': { paddingLeft: '1.25rem', marginBottom: '0.5rem', listStyleType: 'disc' },
-  '& li': { marginBottom: '0.2rem', fontSize: '0.85rem', lineHeight: '1.5', color: colors.textBody, display: 'list-item' },
+  '& p': { marginBottom: '0.5rem', lineHeight: '1.7', fontSize: '0.875rem', color: colors.textBody },
+  '& ul': { paddingLeft: '1.25rem', marginBottom: '0.75rem', listStyleType: 'disc' },
+  '& li': { marginBottom: '0.35rem', fontSize: '0.85rem', lineHeight: '1.6', color: colors.textBody, display: 'list-item' },
   '& strong': { color: colors.textDark, fontWeight: 'bold' },
   '& a': { color: colors.pageBg, textDecoration: 'underline' },
 };
@@ -29,13 +31,11 @@ function SectionHeading({ children, light }: { children: string; light?: boolean
   return (
     <Heading
       as="h2"
-      fontSize="md"
+      fontSize={light ? 'lg' : 'xl'}
       fontWeight="bold"
       color={colors.accent}
-      textTransform="uppercase"
-      letterSpacing="0.05em"
-      mb={3}
-      pb={1}
+      mb={4}
+      pb={2}
       borderBottom="2px solid"
       borderColor={light ? colors.borderSidebar : colors.borderLight}
     >
@@ -56,13 +56,13 @@ function SidebarSection({ heading, content }: { heading: string; content: string
       .map((l) => l.replace(/^-\s*/, '').trim());
 
     return (
-      <Box mb={5}>
+      <Box mb={8}>
         <SectionHeading light>{heading}</SectionHeading>
         {lines.map((line) => {
           const match = line.match(/^\*\*(.+?)\*\*[:\s]*(.*)/);
           if (match) {
             return (
-              <Box key={match[1]} mb={2}>
+              <Box key={match[1]} mb={3}>
                 <Text fontSize="xs" fontWeight="bold" color={colors.accent} mb={1}>
                   {match[1]}
                 </Text>
@@ -97,9 +97,9 @@ function SidebarSection({ heading, content }: { heading: string; content: string
       .map((l) => l.replace(/^-\s*/, '').trim());
 
     return (
-      <Box mb={5}>
+      <Box mb={8}>
         <SectionHeading light>{heading}</SectionHeading>
-        <List.Root gap={1} listStyle="none" ps={0}>
+        <List.Root gap={2} listStyle="none" ps={0}>
           {items.map((item) => {
             const match = item.match(/^\*\*(.+?)\*\*\s*[—–-]\s*(.*)/);
             if (match) {
@@ -136,20 +136,26 @@ function SidebarSection({ heading, content }: { heading: string; content: string
 }
 
 export const ResumeView = ({ resume }: ResumeViewProps) => {
-  const sidebar = resume.sections.filter((s) => isSidebarSection(s.heading));
+  const sidebar = resume.sections
+    .filter((s) => isSidebarSection(s.heading))
+    .sort((a, b) => SIDEBAR_ORDER.indexOf(a.heading) - SIDEBAR_ORDER.indexOf(b.heading));
   const main = resume.sections.filter((s) => !isSidebarSection(s.heading));
+
+  const firstName = resume.name.split(' ')[0];
+  const lastName = resume.name.split(' ').slice(1).join(' ');
 
   return (
     <Box maxW="960px" mx="auto" px={{ base: 3, md: 6 }} py={6}>
-      <Grid
-        templateColumns={{ base: '1fr', md: '260px 1fr' }}
-        borderRadius="lg"
-        overflow="hidden"
-        boxShadow="lg"
-      >
-        {/* Sidebar */}
-        <Box bg={colors.sidebarBg} order={{ base: 2, md: 1 }}>
-          <Flex justify="center" pt={6} pb={2}>
+      <Box borderRadius="lg" overflow="hidden" boxShadow="lg">
+        {/* Header row: avatar + name/title/contact */}
+        <Grid templateColumns={{ base: '1fr', md: '260px 1fr' }}>
+          <Flex
+            bg={colors.sidebarBg}
+            justify="center"
+            align="center"
+            p={6}
+            order={{ base: 1, md: 1 }}
+          >
             <Box
               boxSize="200px"
               borderRadius="full"
@@ -167,74 +173,76 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
               />
             </Box>
           </Flex>
-          <Box px={5} py={4}>
+          <Flex
+            bg={colors.mainBg}
+            direction="column"
+            justify="center"
+            px={5}
+            py={6}
+            order={{ base: 2, md: 2 }}
+          >
+            <Heading as="h1" fontSize={{ base: '4xl', md: '5xl' }} color={colors.textDark} mb={4}>
+              <Box as="span" fontWeight="bold">
+                {firstName}
+              </Box>{' '}
+              <Box as="span" fontSize={{ base: '4xl', md: '5xl' }} fontWeight="normal">
+                {lastName}
+              </Box>
+            </Heading>
+            <Text fontSize="2xl" color={colors.accent} fontWeight="medium" mb={4}>
+              {resume.title}
+            </Text>
+            <Box>
+              {resume.contact.map((item) => {
+                const linkMatch = item.match(/\[(.+?)]\((.+?)\)/);
+                if (linkMatch) {
+                  return (
+                    <Link
+                      key={item}
+                      href={linkMatch[2]}
+                      target="_blank"
+                      display="block"
+                      fontSize="sm"
+                      color={colors.pageBg}
+                      _hover={{ color: colors.accent }}
+                      mb={1}
+                    >
+                      {linkMatch[2]}
+                    </Link>
+                  );
+                }
+                return (
+                  <Text key={item} fontSize="sm" color={colors.textSecondary} mb={1}>
+                    {item}
+                  </Text>
+                );
+              })}
+            </Box>
+          </Flex>
+        </Grid>
+
+        {/* Full-width divider */}
+        <Box h="2px" bg={colors.borderSidebar} />
+
+        {/* Body: sidebar + main content */}
+        <Grid templateColumns={{ base: '1fr', md: '260px 1fr' }}>
+          <Box bg={colors.sidebarBg} px={5} py={5} order={{ base: 2, md: 1 }}>
             {sidebar.map((s) => (
               <SidebarSection key={s.heading} heading={s.heading} content={s.content} />
             ))}
           </Box>
-        </Box>
-
-        {/* Main content */}
-        <Box bg={colors.mainBg} order={{ base: 1, md: 2 }} p={{ base: 5, md: 6 }}>
-          <Box mb={5} pb={4} borderBottom="2px solid" borderColor={colors.borderLight}>
-            <Heading
-              as="h1"
-              fontSize={{ base: '2xl', md: '3xl' }}
-              color={colors.textDark}
-              fontWeight="bold"
-            >
-              {resume.name}
-            </Heading>
-            <Text fontSize="lg" color={colors.accent} fontWeight="semibold" mb={2}>
-              {resume.title}
-            </Text>
-            <Flex wrap="wrap" gap={{ base: 1, md: 2 }} align="center">
-              {resume.contact.map((item, idx) => {
-                const linkMatch = item.match(/\[(.+?)]\((.+?)\)/);
-                const separator = idx < resume.contact.length - 1 && (
-                  <Text color={colors.textFaint} fontSize="sm" userSelect="none">
-                    |
-                  </Text>
-                );
-                if (linkMatch) {
-                  return (
-                    <>
-                      <Link
-                        key={item}
-                        href={linkMatch[2]}
-                        target="_blank"
-                        fontSize="sm"
-                        color={colors.pageBg}
-                        _hover={{ color: colors.accent }}
-                      >
-                        {linkMatch[1]}
-                      </Link>
-                      {separator}
-                    </>
-                  );
-                }
-                return (
-                  <>
-                    <Text key={item} fontSize="sm" color={colors.textSecondary}>
-                      {item}
-                    </Text>
-                    {separator}
-                  </>
-                );
-              })}
-            </Flex>
-          </Box>
-
-          {main.map((s) => (
-            <Box key={s.heading} mb={6}>
-              <SectionHeading>{s.heading}</SectionHeading>
-              <Box color={colors.textBody} css={mainMarkdownCss}>
-                <Markdown>{s.content}</Markdown>
+          <Box bg={colors.mainBg} px={5} py={5} order={{ base: 1, md: 2 }}>
+            {main.map((s) => (
+              <Box key={s.heading} mb={8}>
+                <SectionHeading>{s.heading}</SectionHeading>
+                <Box color={colors.textBody} css={mainMarkdownCss}>
+                  <Markdown>{s.content}</Markdown>
+                </Box>
               </Box>
-            </Box>
-          ))}
-        </Box>
-      </Grid>
+            ))}
+          </Box>
+        </Grid>
+      </Box>
     </Box>
   );
 };
