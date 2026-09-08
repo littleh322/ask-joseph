@@ -181,7 +181,7 @@ export const ResumeView = ({ resume }: ResumeViewProps) => {
             py={6}
             order={{ base: 2, md: 2 }}
           >
-            <Heading as="h1" fontSize={{ base: '4xl', md: '5xl' }} color={colors.textDark} mb={4}>
+            <Heading as="h1" fontSize={{ base: '4xl', md: '5xl' }} color={colors.textDark} mb={4} lineHeight="1.2">
               <Box as="span" fontWeight="bold">
                 {firstName}
               </Box>{' '}
